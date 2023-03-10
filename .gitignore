@@ -29,3 +29,7 @@ jspm_packages/
 
 # Optional eslint cache
 .eslintcache
+
+#Enviroment Variables
+.env
+.env.local
