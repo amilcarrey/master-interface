@@ -19,6 +19,8 @@ export function generateDataFrame(txBuff: number[] | Uint8Array) {
    for (const data of resultDataFrame) {
       console.log(data.toString(16).padStart(2, "0"));
    }
+
+   return resultDataFrame;
 }
 
 
