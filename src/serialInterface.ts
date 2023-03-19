@@ -2,6 +2,9 @@
 import {SerialPort} from 'serialport';
 import { ByteLengthParser } from '@serialport/parser-byte-length'
 import { generateDataFrame } from './generator';
+import {config} from 'dotenv'
+
+config({path:'.env.local'})
 
 export class SerialInterface {
    private static instances: Map<string, SerialInterface> = new Map<string, SerialInterface>();;
@@ -15,11 +18,11 @@ export class SerialInterface {
       this.parser = this.port.pipe(new ByteLengthParser({ length: 5 }));
    }
 
-   public static getInstance(portName: string = "COM2") {
+   public static getInstance(portName: string = process.env.SERIAL_PORT_NAME || 'COM2') {
       if (!SerialInterface.instances.has(portName) || SerialInterface.instances.get(portName) === undefined) {
          SerialInterface.instances.set(portName, new SerialInterface(portName));
       }
-      return SerialInterface.instances.get(portName);
+      return SerialInterface.instances.get(portName)!;
    }
 
    public readData() {
