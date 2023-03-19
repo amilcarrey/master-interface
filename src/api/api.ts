@@ -16,7 +16,7 @@ app.get('/readAllStatus', (req, res) => {
 
 app.post('/open', (req, res) => {
   const body = req.body;
-  const { channel } = body;
+  const { board, channel } = body;
   const channelNumber = parseInt(channel);
 
   try {
