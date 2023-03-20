@@ -1,5 +1,5 @@
-import { Generator } from "../commandFactory";
-import { SerialInterface } from "../serialInterface";
+import { Generator } from "../classes/CommandFactory/commandFactory";
+import { SerialInterface } from "../classes/SerialInterface/serialInterface";
 
 const all = (board: number) => {
    const generator = new Generator(COMMAND_HEADER.OPEN, board, 0, FUNCTION_CODES.OPEN);

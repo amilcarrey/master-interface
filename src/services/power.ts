@@ -1,8 +1,8 @@
-import { Generator } from "../commandFactory";
-import { SerialInterface } from "../serialInterface";
+import { Generator } from "../classes/CommandFactory/commandFactory";
+import { SerialInterface } from "../classes/SerialInterface/serialInterface";
 
 const powerOn = (board: number) => {
-   const generator = new Generator(COMMAND_HEADER.LONG_POWER_ON, board, 01, FUNCTION_CODES.OPEN);
+   const generator = new Generator(COMMAND_HEADER.LONG_POWER_ON, board, 0x01, FUNCTION_CODES.OPEN);
    const command = generator.getCommand();
    generator.printFormated();
 
