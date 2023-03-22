@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { SerialInterface } from '../serialInterface';
+import { SerialInterface } from '../classes/SerialInterface/serialInterface';
 import boardCodes from '../constants/boardCodes';
 
 const app = express();

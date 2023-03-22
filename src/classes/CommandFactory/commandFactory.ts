@@ -1,11 +1,12 @@
+import { COMMAND_HEADER, FUNCTION_CODES, OperationCommand } from "../../types";
 
 export class Generator {
    private _command: COMMAND_HEADER
    private _board: number
    private _lockAddress: number
-   private _functionCode: number
+   private _functionCode: FUNCTION_CODES
 
-   constructor(command: COMMAND_HEADER, board: number, lockAddress: number, functionCode: number) {
+   constructor(command: COMMAND_HEADER, board: number, lockAddress: number, functionCode: FUNCTION_CODES) {
       this._command = command;
       this._board = board;
       this._lockAddress = lockAddress;
@@ -29,7 +30,6 @@ export class Generator {
    }
 
    public validateCRC(buff: number[] | Uint8Array): boolean {
-      let temp = 0;
       // buff without crc (last byte)
       const buffWithoutCRC = buff.slice(0, buff.length - 1);
       //actual crc

@@ -1,10 +1,9 @@
 
-import {SerialPort} from 'serialport';
+import { SerialPort } from 'serialport';
 import { ByteLengthParser } from '@serialport/parser-byte-length'
-import { generateDataFrame } from './generator';
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 
-config({path:'.env.local'})
+config({ path: '.env.local' })
 
 export class SerialInterface {
    private static instances: Map<string, SerialInterface> = new Map<string, SerialInterface>();;
@@ -14,7 +13,7 @@ export class SerialInterface {
    private readonly BAUD_RATE = 9600;
 
    private constructor(portName: string) {
-      this.port = new SerialPort({path:portName, baudRate: this.BAUD_RATE });
+      this.port = new SerialPort({ path: portName, baudRate: this.BAUD_RATE });
       this.parser = this.port.pipe(new ByteLengthParser({ length: 5 }));
    }
 
@@ -32,12 +31,11 @@ export class SerialInterface {
    }
 
    public writeData(data: number[] | Uint8Array) {
-      const newData = generateDataFrame(data);
-      this.port.write(newData, (err) => {
+      this.port.write(data, (err) => {
          if (err) {
             return console.log("Error on write: ", err.message);
          }
-         console.log(`Message written: ${newData}`);
+         console.log(`Message written: ${data}`);
       });
    }
 }
