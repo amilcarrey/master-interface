@@ -9,6 +9,7 @@ const all = (board: number) => {
 
    const serialInterface = SerialInterface.getInstance();
    serialInterface.writeData(command);
+
    return command;
 }
 

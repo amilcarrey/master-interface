@@ -25,6 +25,8 @@ export class SerialInterface {
    }
 
    public readData() {
+      console.log("Reading data...");
+      this.port.pipe(this.parser)
       this.parser.on("data", (data) => {
          console.log(data);
       });
@@ -37,6 +39,10 @@ export class SerialInterface {
          }
          console.log(`Message written: ${data}`);
       });
+   }
+
+   public close() {
+      this.port.close();
    }
 }
 
