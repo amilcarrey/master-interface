@@ -1,6 +1,6 @@
 
 import { SerialPort } from 'serialport';
-import { ByteLengthParser } from '@serialport/parser-byte-length'
+import { ReadlineParser } from '@serialport/parser-readline'
 import { config } from 'dotenv'
 
 config({ path: '.env.local' })
@@ -8,13 +8,13 @@ config({ path: '.env.local' })
 export class SerialInterface {
    private static instances: Map<string, SerialInterface> = new Map<string, SerialInterface>();;
    private port: SerialPort;
-   private parser: ByteLengthParser;
+   private parser: ReadlineParser;
 
    private readonly BAUD_RATE = 9600;
 
    private constructor(portName: string) {
       this.port = new SerialPort({ path: portName, baudRate: this.BAUD_RATE });
-      this.parser = this.port.pipe(new ByteLengthParser({ length: 5 }));
+      this.parser = this.port.pipe(new ReadlineParser());
    }
 
    public static getInstance(portName: string = process.env.SERIAL_PORT_NAME || 'COM2') {

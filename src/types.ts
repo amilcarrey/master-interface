@@ -8,7 +8,8 @@ enum COMMAND_HEADER {
 
 enum FUNCTION_CODES {
    OPEN = 0x11,
-   CLOSE = 0x00
+   CLOSE = 0x00,
+   QUERY_ALL = 0x33,
 }
 
 type OperationCommand = number[] | Uint8Array;
