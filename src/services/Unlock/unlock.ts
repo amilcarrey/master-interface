@@ -13,6 +13,9 @@ const all = (board: number) => {
 }
 
 const lockerNumber = (board: number, lockerNumber: number) => {
+   console.log('board', board);
+   console.log('lockerNumber', lockerNumber);
+   
    const generator = new Generator(COMMAND_HEADER.OPEN, board, lockerNumber, FUNCTION_CODES.OPEN);
    const command = generator.getCommand();
    generator.printFormated();

@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { SerialInterface } from '../classes/SerialInterface/serialInterface';
-import { all } from '../services/Status/status';
+import { all, lockerNumber as readLockerNumber } from '../services/Status/status';
 import { powerOn, powerOff } from '../services/Power/power';
 import { all as unlockAll, lockerNumber } from '../services/Unlock/unlock';
 
@@ -25,10 +25,23 @@ app.get('/readAllStatus', (req, res) => {
   }
 });
 
+app.get('/readStatus', (req, res) => {
+  try {
+    const board = req.query.board as string;
+    const locker = req.query.locker as string;
+    if (!board) return res.send('Invalid board');
+    if (!locker) return res.send('Invalid locker');
+    const statuses = readLockerNumber(parseInt(board), parseInt(locker));
+    return res.status(200).send(statuses);
+  } catch (error: any) {
+    return res.status(500).send({ error: error.message })
+  }
+});
+
 app.post('/unlock', async (req, res) => {
   const body = req.body;
   const { board, locker } = body;
-
+  
   try {
     await lockerNumber(parseInt(board), parseInt(locker));
     res.send(`Unlock locker ${locker} in board ${board}`);
