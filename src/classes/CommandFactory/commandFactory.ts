@@ -1,6 +1,6 @@
 import { COMMAND_HEADER, FUNCTION_CODES, OperationCommand } from "../../types";
 
-export class Generator {
+export class CommandFactory {
    private _command: COMMAND_HEADER
    private _board: number
    private _lockAddress: number

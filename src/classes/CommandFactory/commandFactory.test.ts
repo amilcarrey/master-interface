@@ -1,11 +1,11 @@
-import { Generator } from './commandFactory';
+import { CommandFactory } from './commandFactory';
 import { COMMAND_HEADER, FUNCTION_CODES } from '../../types';
 
 describe('Generator', () => {
-   let generator: Generator;
+   let generator: CommandFactory;
 
    beforeEach(() => {
-      generator = new Generator(COMMAND_HEADER.OPEN, 0x01, 0x01, FUNCTION_CODES.OPEN);
+      generator = new CommandFactory(COMMAND_HEADER.OPEN, 0x01, 0x01, FUNCTION_CODES.OPEN);
    });
 
    describe('getCommand', () => {
