@@ -7,8 +7,8 @@ config({ path: '.env.local' })
 
 export class SerialInterface {
    private static instances: Map<string, SerialInterface> = new Map<string, SerialInterface>();;
-   private port: SerialPort;
-   private parser: ReadlineParser;
+   public port: SerialPort;
+   public parser: ReadlineParser;
 
    private readonly BAUD_RATE = 9600;
 
@@ -24,12 +24,45 @@ export class SerialInterface {
       return SerialInterface.instances.get(portName)!;
    }
 
-   public readData() {
-      console.log("Reading data...");
-      this.port.pipe(this.parser)
-      this.parser.on("data", (data) => {
-         console.log(data);
+   public setBufferSizeToRead(size: number = 5, once: boolean = false) {
+      this.port.removeAllListeners('readable');
+      if (once) {
+         this.port.prependOnceListener('readable', (data:any) => {
+            console.log(data);
+            
+            if (this.port.readableLength >= size) this.port.read()
+            console.log(`_____________________________________\n`);
+         })
+         return;
+      }
+      this.port.on('readable', () => {
+         if (this.port.readableLength >= size) this.port.read()
+         console.log(`_____________________________________\n`);
+      })
+   }
+
+   public readData(size: number = 5) {
+      this.setBufferSizeToRead(size);
+      this.port.on("data", (data) => {
+         const buffer = Buffer.from(data, 'hex');
+         const hexArray = Array.from(buffer.toJSON().data);
+         const formatedData = hexArray.map((byte: number) => byte.toString(16)).join(' ')
+
+         //Emit event to the main process with the data received
+
+
+         // const binaryStatus = decodeStatusMultiple(hexArray);
+
+         console.log(`DataLength: ${data.length}`);
+         console.log(`DataType: ${typeof (data)}`);
+         console.log(`Raw: ${data}`);
+         // console.log(`Valid: ${commandFactory.validateCRC(hexArray)}`);
+         console.log(`Readable: ${formatedData}`);
+         // console.log(`Binary: ${binaryStatus}`);
+
+
       });
+
    }
 
    public writeData(data: number[] | Uint8Array) {
