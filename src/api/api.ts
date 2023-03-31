@@ -41,7 +41,7 @@ app.get('/readStatus', (req, res) => {
 app.post('/unlock', async (req, res) => {
   const body = req.body;
   const { board, locker } = body;
-  
+
   try {
     await lockerNumber(parseInt(board), parseInt(locker));
     res.send(`Unlock locker ${locker} in board ${board}`);
@@ -55,7 +55,7 @@ app.post('/unlockAll', async (req, res) => {
   const { board } = body;
 
   try {
-    await unlockAll(parseInt(board));
+    await unlockAll(parseInt(board),);
     res.send(`Unlock all locks of board ${board}`);
   } catch (error) {
     res.send('Invalid channel');
@@ -67,7 +67,7 @@ app.post('/powerOn', async (req, res) => {
   const { board, pin } = body;
 
   try {
-    await powerOn(parseInt(board));
+    await powerOn(parseInt(board), pin);
     res.send(`Powering pin ${pin} of board ${board}`);
   } catch (error) {
     res.send('Invalid channel');
@@ -79,7 +79,7 @@ app.post('/powerOff', async (req, res) => {
   const { board, pin } = body;
 
   try {
-    await powerOff(parseInt(board));
+    await powerOff(parseInt(board), pin);
     res.send(`Powering off pin ${pin} of board ${board}`);
   } catch (error) {
     res.send('Invalid channel');
